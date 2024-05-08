@@ -1,0 +1,5 @@
+modal
+fastapi
+pydantic
+python-lsp-server
+python-lsp-ruff
