@@ -37,6 +37,8 @@ class Request(BaseModel):
     msg: str
 
 @app.cls(
+    # NB(@jinnovation): This is also where we can specify the GPU type if needed
+    # gpu = "A100",
     timeout = 60 * 10,
     container_idle_timeout=60 * 10,
     allow_concurrent_inputs=10,
@@ -47,6 +49,10 @@ class Model:
     def preload_model(self):
         """This method runs once on container initialization, amortizing the
         model-loading cost to zero over time.
+
+        Note that this pattern -- encapsulating expensive initialization logic
+        behind a @modal.enter-decorated method -- generalizes well to, for
+        example, downloading datasets, pre-loading them into memory, etc.
 
         """
         from transformers import pipeline
